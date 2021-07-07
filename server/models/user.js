@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Whishlist, {foreignKey: 'UserId'})
+      this.hasMany(models.Investment, {foreignKey: 'UserId'})
     }
   };
   User.init({
