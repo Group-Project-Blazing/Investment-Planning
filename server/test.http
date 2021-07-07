@@ -1,0 +1,41 @@
+@host=http://localhost:3000
+
+GET {{host}} http/1.1
+
+### Register
+POST {{host}}/register http/1.1
+Content-Type: application/json
+
+{
+    "email": "user1@gmail.com",
+    "password": "user1"
+}
+
+### Login
+POST {{host}}/login http/1.1
+Content-Type: application/json
+
+{
+    "email": "user1@gmail.com",
+    "password": "user1"
+}
+
+### Post Investment
+POST {{host}}/investments http/1.1
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1Njg3NzA4fQ._Jk4Q0LAphauJIjcsva0QWooNf1GXirj8TYceq0a0yM
+
+{
+    "name": "BTC",
+    "price": 150000
+}
+
+### Get Investment
+GET {{host}}/investments http/1.1
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1Njg3NzA4fQ._Jk4Q0LAphauJIjcsva0QWooNf1GXirj8TYceq0a0yM
+
+### Delete Investment
+DELETE {{host}}/investments/1 http/1.1
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1Njg3NzA4fQ._Jk4Q0LAphauJIjcsva0QWooNf1GXirj8TYceq0a0yM
