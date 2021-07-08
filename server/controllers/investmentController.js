@@ -1,4 +1,4 @@
-const { Investment } = require("../models");
+const { User, Investment } = require("../models");
 
 class InvestmentController {
   static getAll(req, res, next) {
@@ -14,17 +14,42 @@ class InvestmentController {
   static addInvestment(req, res, next) {
     const { name, price } = req.body;
 
-    Investment.create({
-      name,
-      price,
-      UserId: req.UserId,
+    User.findOne({
+      where: {
+        id: req.UserId,
+      },
     })
       .then((result) => {
-        res.status(201).json(result);
+        if (result.dataValues.saldo > price) {
+          User.update(
+            {
+              saldo: result.dataValues.saldo - price,
+            },
+            {
+              where: {
+                id: result.dataValues.id,
+              },
+            }
+          )
+            .then(() => {
+              Investment.create({
+                UserId: req.UserId,
+                name: name,
+                price: price,
+              }).then((result) => {
+                res.status(201).json({
+                  name: result.dataValues.name,
+                  price: result.dataValues.price,
+                  UserId: result.dataValues.UserId,
+                });
+              });
+            })
+            .catch((err) => console.log(err));
+        } else {
+          throw new Error("insufficient saldo");
+        }
       })
-      .catch((err) => {
-        res.status(500).json(err);
-      });
+      .catch((err) => console.log(err));
   }
 
   static findById(req, res, next) {
@@ -33,15 +58,51 @@ class InvestmentController {
 
   static deleteInvestment(req, res, next) {
     const { investment } = req;
-
-    investment
-      .destroy()
+    const { id } = req.params;
+    let sisaSaldo;
+    User.findOne({
+      where: {
+        id: req.UserId,
+      },
+    })
+      .then((result) => {
+        sisaSaldo = result.dataValues.saldo + investment.dataValues.price;
+        return User.update(
+          {
+            saldo: sisaSaldo,
+          },
+          {
+            where: {
+              id: req.UserId,
+            },
+          }
+        );
+      })
       .then(() => {
-        res.status(200).json({ message: "Successfully delete Wishlist" });
+        return Investment.destroy({
+          where: {
+            id: id,
+          },
+        });
+      })
+      .then(() => {
+        res.status(200).json({
+          message: "Successfully deleted wishlist",
+          saldo: sisaSaldo,
+        });
       })
       .catch((err) => {
-        res.json(500).json(err);
+        res.status(500).json(err);
       });
+
+    // investment
+    //   .destroy()
+    //   .then(() => {
+    //     res.status(200).json({ message: "Successfully delete Wishlist" });
+    //   })
+    //   .catch((err) => {
+    //     res.json(500).json(err);
+    //   });
   }
 }
 
