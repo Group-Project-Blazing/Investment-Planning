@@ -26,8 +26,8 @@ Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1NzQ0MzczfQ.8G0G_mkjCkd_BalRwHJ89UR6L-kAkqlWkdfFzS-uGlI
 
 {
-    "name": "BTC",
-    "price": 150000
+    "name": "DOGE",
+    "price": 200000
 }
 
 ### Get Investment

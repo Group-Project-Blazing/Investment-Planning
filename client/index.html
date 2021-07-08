@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Shopping Wishlist</title>
+    <title>Investment Planning</title>
     <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -28,9 +28,9 @@
         <div class="row d-flex">
           <div class="col-4">
             <h2 class="text-dark">Welcome to</h2>
-            <h2 class="text-dark">Shopping WishList</h2>
+            <h2 class="text-dark">Investment Planner</h2>
             <p class="text-dark">Please Login first</p>
-            <form class="my-4">
+            <form id="form-login" class="my-4">
               <div class="form-group">
                 <label for="email-login">Email</label>
                 <input
@@ -70,14 +70,17 @@
                         <img src="./images/balance.jpeg" class="img-thumbnail" alt="...">
                         <div class="card-body">
                         <h5 class="card-title">Current Saldo</h5>
-                        <p class="card-text" id="current_saldo">Rp. 1.000.000</p>
+                        <p id="current-saldo" class="card-text" id="current_saldo"></p>
                         </div>
                     </div>
               </div>
               <div class="col-8">
                 <!-- This is Wishlists -->
                 <div id="wishlists-container">
-                   
+                    <h1 class="bg-dark p-2 rounded-sm text-center text-white">My Wishlists</h1>
+                    <div id="investments" class="row my-4 px-4">
+                    <!-- Each of comic will have one of this card -->
+                    </div>
                 </div>
               </div>
           </div>
@@ -87,23 +90,28 @@
       </div>
       <!-- This is form page to update a comic -->
       <div id="add-container" class="">
-        <h1>Add Wishlist</h1>
+        <h1>Add Investment Plan</h1>
         <form class="my-4">
           <div class="form-group">
-            <label for="wl-name">Name</label>
-            <input id="wl-name" type="text" class="form-control" name="wl-name" placeholder="Wishlist Name" />
+            <label for="inv-type">Investment Type</label>
+            <select name="inv-type" id="inv-type" class="form-control">
+              <option value="">--Select Investment Type--</option>
+              <option value="stock">Stock</option>
+              <option value="crypto">Crypto</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="price">Image</label>
-            <input type="text" class="form-control" name="wl-image" id="wl-image" placeholder="Wishlist image url"/>
+            <label for="inv-name">Name</label>
+            <select name="inv-name" id="inv-name" class="form-control">
+              <option value="">--Select Investment Name--</option>
+              <option value="btc">BTC</option>
+              <option value="ethereum">Ethereum</option>
+              <option value="ripple">Ripple</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="price">Price</label>
+            <label for="price">Lot / Coin</label>
             <input type="text" class="form-control" name="wl-price" id="wl-price" placeholder="Wishlist price"/>
-          </div>
-          <div class="form-group">
-            <label for="imageUrl">Description</label>
-            <input type="text" class="form-control" name="wl-desc" id="wl-desc" placeholder="Description"/>
           </div>
           <button id="btn-add" type="submit" class="btn btn-dark">
             Submit
