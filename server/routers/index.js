@@ -6,6 +6,11 @@ const router = require("express").Router();
 
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
+router.get(
+  "/investments/crypto",
+  authentification,
+  InvestmentController.getCryptoPrices
+);
 router.get("/investments", authentification, InvestmentController.getAll);
 router.post(
   "/investments",

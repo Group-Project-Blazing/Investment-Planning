@@ -39,3 +39,9 @@ access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1NzQ0M
 DELETE {{host}}/investments/2 http/1.1
 Content-Type: application/json
 access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1NzQ0MzczfQ.8G0G_mkjCkd_BalRwHJ89UR6L-kAkqlWkdfFzS-uGlI
+
+### Get Crypto Prices
+GET {{host}}/investments/crypto http/1.1
+Content-Type: application/json
+access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI1NzQ0MzczfQ.8G0G_mkjCkd_BalRwHJ89UR6L-kAkqlWkdfFzS-uGlI
+
