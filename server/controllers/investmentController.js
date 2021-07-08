@@ -1,4 +1,5 @@
 const { User, Investment } = require("../models");
+const axios = require("axios");
 
 class InvestmentController {
   static getAll(req, res, next) {
@@ -94,15 +95,32 @@ class InvestmentController {
       .catch((err) => {
         res.status(500).json(err);
       });
-
-    // investment
-    //   .destroy()
-    //   .then(() => {
-    //     res.status(200).json({ message: "Successfully delete Wishlist" });
-    //   })
-    //   .catch((err) => {
-    //     res.json(500).json(err);
-    //   });
+  }
+  static getCryptoPrices(req, res, next) {
+    let prices = {};
+    let btc = axios.get(
+        `https://api.lunarcrush.com/v2?data=assets&key=${process.env.LUNAR_API_KEY}&symbol=BTC`
+      ),
+      xrp = axios.get(
+        `https://api.lunarcrush.com/v2?data=assets&key=${process.env.LUNAR_API_KEY}&symbol=XRP`
+      ),
+      eth = axios.get(
+        `https://api.lunarcrush.com/v2?data=assets&key=${process.env.LUNAR_API_KEY}&symbol=ETH`
+      ),
+      doge = axios.get(
+        `https://api.lunarcrush.com/v2?data=assets&key=${process.env.LUNAR_API_KEY}&symbol=DOGE`
+      );
+    Promise.all([btc, xrp, eth, doge])
+      .then((results) => {
+        results.forEach((result) => {
+          prices[result.data.data[0].symbol] =
+            result.data.data[0].price * 14000;
+        });
+        res.status(200).json({ results: JSON.stringify(prices) });
+      })
+      .catch((err) => {
+        res.status(500).json(err);
+      });
   }
 }
 

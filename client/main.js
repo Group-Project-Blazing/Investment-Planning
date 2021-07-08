@@ -6,8 +6,8 @@ function formatRupiah(angka, prefix) {
     ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
   if (ribuan) {
-    separator = sisa ? "." : "";
-    rupiah += separator + ribuan.join(".");
+    separator = sisa ? "," : "";
+    rupiah += separator + ribuan.join(",");
   }
 
   rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
@@ -82,7 +82,7 @@ function afterLogin() {
   $("#add-container").show();
   getInvestments();
   $("#current_saldo").empty();
-  $("#current-saldo").append(formatRupiah(localStorage.saldo, ","));
+  $("#current-saldo").append(formatRupiah(localStorage.saldo, "Rp. "));
 }
 
 function deleteWhishlist(id) {
@@ -146,6 +146,22 @@ $(document).ready(function () {
     beforeLogin();
   }
 
+  if (localStorage.access_token) {
+    $.ajax({
+      url: `http://localhost:3000/investments/crypto`,
+      method: "GET",
+      headers: {
+        access_token: localStorage.access_token,
+      },
+    })
+      .done((result) => {
+        localStorage.setItem("crypto_prices", result.results);
+      })
+      .fail((err) => {
+        console.log(err);
+      });
+  }
+
   $("#btn-show-add").click(showForm);
   $("#add-container").submit(submitAdd);
   $("#form-login").click(login);
@@ -153,15 +169,17 @@ $(document).ready(function () {
   $("#btn-logout").click(() => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("saldo");
+    localStorage.removeItem("crypto_prices");
     beforeLogin();
   });
 
   const prices = {
     crypto: [
       { value: "", desc: "--Select Investment Name--" },
-      { value: "btc", desc: "BTC" },
-      { value: "ethereum", desc: "Ethereum" },
-      { value: "ripple", desc: "Ripple" },
+      { value: "BTC", desc: "BTC" },
+      { value: "XRP", desc: "Ethereum" },
+      { value: "ETH", desc: "Ripple" },
+      { value: "DOGE", desc: "Doge" },
     ],
     stock: [
       { value: "", desc: "--Select Investment Name--" },
@@ -172,6 +190,7 @@ $(document).ready(function () {
   };
 
   const invName = document.querySelector("[name=inv-name]");
+  const invPrice = document.querySelector("[name=inv-price]");
   document
     .querySelector("[name=inv-type]")
     .addEventListener("change", function (e) {
@@ -179,6 +198,14 @@ $(document).ready(function () {
         (acc, elem) =>
           `${acc}<option value="${elem.value}">${elem.desc}</option>`,
         ""
+      );
+    });
+  document
+    .querySelector("[name=inv-name]")
+    .addEventListener("change", function (e) {
+      invPrice.value = formatRupiah(
+        String(Math.round(JSON.parse(localStorage.crypto_prices)[this.value])),
+        "Rp. "
       );
     });
 });
