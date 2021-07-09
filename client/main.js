@@ -55,7 +55,7 @@ function getInvestments() {
             <div class="card text-center">
                 <div class="card-body">
                 <h5 class="card-title">${result.name}</h5>
-                <p class="card-text">${result.price}</p>
+                <p class="card-text">${formatRupiah(String(result.price),"Rp. ")}</p>
                 <button class="btn btn-dark" id="btn-delete-wl" type="submit">Delete</button>
                 </div>
             </div>
@@ -108,29 +108,30 @@ function showForm() {
 function submitAdd(event) {
   event.preventDefault();
 
-  let name = $("#wl-name").val();
-  let image_url = $("#wl-image").val();
-  let price = $("#wl-price").val();
-  let description = $("#wl-desc").val();
+  let name = $("#inv-name").val();
+  let price = Math.round(
+    Number($("#inv-amount").val()) *
+      Number($("#inv-price").val().replace(/\D/g, ""))
+  );
 
   $.ajax({
-    url: "http://localhost:3000/whishlist",
+    url: "http://localhost:3000/investments",
     method: "POST",
     headers: {
       access_token: localStorage.access_token,
     },
     data: {
       name,
-      image_url,
       price,
-      description,
     },
   })
-    .done(() => {
-      $("#wl-name").val("");
-      $("#wl-image").val("");
-      $("#wl-price").val("");
-      $("#wl-desc").val("");
+    .done((result) => {
+      $("#inv-type").val("");
+      $("#inv-name").val("");
+      $("#inv-price").val("");
+      $("#inv-amount").val("");
+      let lastSaldo = localStorage.saldo - result.price;
+      localStorage.setItem("saldo", lastSaldo);
 
       afterLogin();
     })
@@ -163,7 +164,7 @@ $(document).ready(function () {
   }
 
   $("#btn-show-add").click(showForm);
-  $("#add-container").submit(submitAdd);
+  $("#add-form").submit(submitAdd);
   $("#form-login").click(login);
 
   $("#btn-logout").click(() => {
