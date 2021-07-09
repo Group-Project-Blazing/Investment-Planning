@@ -1,0 +1,34 @@
+
+#btn-login{
+    width:100%;
+}
+
+#my-signin2{
+    width: 100%;
+}
+  
+#my-signin2 > div{
+    margin: 0 auto;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin:10px 0px 10px 0px;
+}
+
+.separator::before,
+.separator::after {
+content: '';
+flex: 1;
+border-bottom: 1px solid #cdcdcd;
+}
+
+.separator:not(:empty)::before {
+margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+margin-left: .25em;
+}

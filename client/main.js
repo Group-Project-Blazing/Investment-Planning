@@ -140,6 +140,52 @@ function submitAdd(event) {
     });
 }
 
+// GOOGLE OAUTH SIGNIN
+function onSignIn(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+
+  $.ajax({
+      url: 'http://localhost:3000/googleLogin',
+      method: 'POST',
+      data: {
+          idToken : id_token
+      }
+  })
+  .done(result => {
+      localStorage.setItem('access_token', result.access_token)
+      afterLogin()
+  })
+  .fail(err => {
+      console.log(err);
+  })
+}
+
+
+// GOOGLE OAUTH SIGN OUT
+function signOut() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+  });
+}
+
+function onFailure(error) {
+  console.log(error);
+}
+
+// GOOGLE OAUTH STYLE
+function renderButton() {
+  gapi.signin2.render('my-signin2', {
+    'scope': 'profile email',
+    'width' :335,
+    'height': 50,
+    'longtitle': true,
+    'theme': 'dark',
+    'onsuccess': onSignIn,
+    'onfailure': onFailure
+  });
+}
+
 $(document).ready(function () {
   if (localStorage.access_token) {
     afterLogin();
@@ -168,6 +214,8 @@ $(document).ready(function () {
   $("#form-login").click(login);
 
   $("#btn-logout").click(() => {
+    alert("clicked")
+    signOut();
     localStorage.removeItem("access_token");
     localStorage.removeItem("saldo");
     localStorage.removeItem("crypto_prices");

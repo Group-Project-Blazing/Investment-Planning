@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="539323179003-resd97o1l0a0l6ebi2nlpk4cp12sdj95.apps.googleusercontent.com">
     <title>Investment Planning</title>
     <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-light bg-dark justify-content-between">
@@ -52,8 +54,10 @@
                 />
               </div>
               <button id="btn-login" type="submit" class="btn btn-dark">
-                Submit
+                Sign In
               </button>
+              <span class="separator">OR</span>
+              <div id="my-signin2" data-onsuccess="onSignIn"></div>
             </form>
           </div>
           <dov class="col-8">
@@ -128,6 +132,8 @@
 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="./main.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="./main.js"></script>
   </body>
 </html>
