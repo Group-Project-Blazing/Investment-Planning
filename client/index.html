@@ -13,7 +13,7 @@
 </head>
 <body>
     <nav class="navbar navbar-light bg-dark justify-content-between">
-        <a class="navbar-brand text-white">My Wishlist</a>
+        <a class="navbar-brand text-white">My Investment Plan</a>
         <button id="btn-logout" class="btn btn-danger">Logout</button>
     </nav>
     <div class="container">
@@ -77,7 +77,7 @@
               <div class="col-8">
                 <!-- This is Wishlists -->
                 <div id="wishlists-container">
-                    <h1 class="bg-dark p-2 rounded-sm text-center text-white">My Wishlists</h1>
+                    <h1 class="bg-dark p-2 rounded-sm text-center text-white">My Investment Plan</h1>
                     <div id="investments" class="row my-4 px-4">
                     <!-- Each of comic will have one of this card -->
                     </div>
@@ -91,7 +91,7 @@
       <!-- This is form page to update a comic -->
       <div id="add-container" class="">
         <h1>Add Investment Plan</h1>
-        <form class="my-4">
+        <form id="add-form" class="my-4">
           <div class="form-group">
             <label for="inv-type">Investment Type</label>
             <select name="inv-type" id="inv-type" class="form-control">
@@ -114,7 +114,7 @@
             <input type="text" class="form-control" name="inv-price" id="inv-price" placeholder="Asset price"/>
           </div>
           <div class="form-group">
-            <label for="inv-amout">Lot / Coin</label>
+            <label for="inv-amount">Lot / Coin</label>
             <input type="text" class="form-control" name="inv-amount" id="inv-amount" placeholder="Asset Amount"/>
           </div>
           <button id="btn-add" type="submit" class="btn btn-dark">
