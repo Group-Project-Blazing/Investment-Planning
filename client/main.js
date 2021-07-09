@@ -85,10 +85,12 @@ function afterLogin() {
   $("#home-container").show();
   $("#login-container").hide();
   $("#add-container").show();
+  getAvatar();
   getInvestments();
   $("#current_saldo").empty();
   $("#current-saldo").append(formatRupiah(localStorage.saldo, "Rp. "));
 }
+
 
 function deleteInvestment(id) {
   $.ajax({
