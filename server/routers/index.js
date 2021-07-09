@@ -12,6 +12,7 @@ router.get(
   authentification,
   InvestmentController.getCryptoPrices
 );
+router.get("/investments/stocks", authentification, InvestmentController.getStocksPrices);
 router.get("/investments", authentification, InvestmentController.getAll);
 router.post(
   "/investments",

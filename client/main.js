@@ -192,14 +192,33 @@ function renderButton() {
   });
 }
 
+function fetchStock(){
+  $.ajax({
+    url: `http://localhost:3000/investments/stocks`,
+    method: "GET",
+    headers: {
+      access_token: localStorage.access_token,
+    },
+  })
+    .done((result) => {
+      console.log(result);
+      localStorage.setItem("stocks", result.results);
+    })
+    .fail((err) => {
+      console.log(err);
+    });
+}
+
 $(document).ready(function () {
   if (localStorage.access_token) {
     afterLogin();
+    
   } else {
     beforeLogin();
   }
 
   if (localStorage.access_token) {
+    fetchStock();
     $.ajax({
       url: `http://localhost:3000/investments/crypto`,
       method: "GET",

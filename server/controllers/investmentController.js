@@ -122,6 +122,48 @@ class InvestmentController {
         res.status(500).json(err);
       });
   }
+
+  static getStocksPrices(req, res, next){
+    let stocks = {}
+    let stocks_list = []
+    let api_header = {
+      'x-rapidapi-key': process.env.RAPID_API_YAHOO_FINANCE_KEY,
+      'x-rapidapi-host': process.env.RAPID_API_YAHOO_FINANCE_HOST
+    }
+
+    let bbca = axios.get('https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary', {
+                  params:{symbol:'BBCA.JK'},
+                  headers:api_header
+              }),
+        arto = axios.get('https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary', {
+                  params:{symbol:'ARTO.JK'},
+                  headers:api_header
+              }),
+        unvr = axios.get('https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary', {
+                params:{symbol:'UNVR.JK'},
+                headers:api_header
+            }),
+        bmri = axios.get('https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary', {
+              params:{symbol:'BMRI.JK'},
+              headers:api_header
+          });
+
+  Promise.all([bbca, arto, unvr,bmri])
+    .then(result => {
+      result.forEach((result,index) =>{
+        stocks_list.push({
+          id:index,
+          symbol:result.data.price.symbol,
+          name:result.data.price.longName,
+          price:result.data.price.regularMarketPrice.raw
+        })
+      })
+      res.status(200).json({ results: stocks_list});
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+  }
 }
 
 module.exports = InvestmentController;
