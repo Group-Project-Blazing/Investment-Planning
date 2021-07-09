@@ -239,7 +239,6 @@ $(document).ready(function () {
   $("#form-login").click(login);
 
   $("#btn-logout").click(() => {
-    alert("clicked")
     signOut();
     localStorage.removeItem("access_token");
     localStorage.removeItem("saldo");
@@ -265,6 +264,7 @@ $(document).ready(function () {
 
   const invName = document.querySelector("[name=inv-name]");
   const invPrice = document.querySelector("[name=inv-price]");
+  const invType = document.querySelector("[name=inv-type]");
   document
     .querySelector("[name=inv-type]")
     .addEventListener("change", function (e) {
@@ -277,6 +277,12 @@ $(document).ready(function () {
   document
     .querySelector("[name=inv-name]")
     .addEventListener("change", function (e) {
+      if (invType.value === "Stock") {
+        invPrice.value = formatRupiah(
+          String(Math.round(JSON.parse(localStorage.stocks)[this.value])),
+          "Rp. "
+        );
+      }
       invPrice.value = formatRupiah(
         String(Math.round(JSON.parse(localStorage.crypto_prices)[this.value])),
         "Rp. "
