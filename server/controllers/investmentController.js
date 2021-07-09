@@ -165,7 +165,7 @@ class InvestmentController {
       result.forEach((result) =>{
         stocks[result.data.price.symbol] = result.data.price.regularMarketPrice.raw
       })
-      res.status(200).json(JSON.stringify(stocks));
+      res.status(200).json({results: JSON.stringify(stocks)});
     })
     .catch(err => {
       res.status(500).json(err)
