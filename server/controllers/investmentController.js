@@ -150,15 +150,10 @@ class InvestmentController {
 
   Promise.all([bbca, arto, unvr,bmri])
     .then(result => {
-      result.forEach((result,index) =>{
-        stocks_list.push({
-          id:index,
-          symbol:result.data.price.symbol,
-          name:result.data.price.longName,
-          price:result.data.price.regularMarketPrice.raw
-        })
+      result.forEach((result) =>{
+        stocks[result.data.price.symbol] = result.data.price.regularMarketPrice.raw
       })
-      res.status(200).json({ results: stocks_list});
+      res.status(200).json(JSON.stringify(stocks));
     })
     .catch(err => {
       res.status(500).json(err)
