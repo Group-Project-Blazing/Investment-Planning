@@ -55,8 +55,13 @@ function getInvestments() {
             <div class="card text-center">
                 <div class="card-body">
                 <h5 class="card-title">${result.name}</h5>
-                <p class="card-text">${formatRupiah(String(result.price),"Rp. ")}</p>
-                <button class="btn btn-dark" id="btn-delete-wl" type="submit">Delete</button>
+                <p class="card-text">${formatRupiah(
+                  String(result.price),
+                  "Rp. "
+                )}</p>
+                <button class="btn btn-dark" id="btn-delete-wl" type="submit" onclick="deleteInvestment(${
+                  result.id
+                })">Delete</button>
                 </div>
             </div>
             </div>
@@ -85,15 +90,16 @@ function afterLogin() {
   $("#current-saldo").append(formatRupiah(localStorage.saldo, "Rp. "));
 }
 
-function deleteWhishlist(id) {
+function deleteInvestment(id) {
   $.ajax({
-    url: `http://localhost:3000/whishlist/${id}`,
+    url: `http://localhost:3000/investments/${id}`,
     method: "DELETE",
     headers: {
       access_token: localStorage.access_token,
     },
   })
-    .done(() => {
+    .done((result) => {
+      localStorage.setItem("saldo", result.saldo);
       afterLogin();
     })
     .fail((err) => {
